@@ -1,30 +1,14 @@
 ---
 import Layout from '../../layouts/Main.astro';
 import ProductCard from '../../components/ProductCard.astro';
-//import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import ProductosRelacionados from '../../components/ProductosRelacionados.astro';
-
-// Definir las rutas para las migas de pan
-//const rutasBreadcrumbs = [
- // {
-   // nombre: "Categorías",
-   // url: "/category"
- // },
- // {
-  //  nombre: "Oro",
-  //  url: "/category/oro"
- // }
-//];
 
 // Datos de productos de oro
-const products = await fetch ("http://localhost:8080/productos/summer")//ir cambiando
+const products = await fetch ("http://localhost:8080/productos/summer")
 .then(res=>{return res.json()})
 ---
 
 <Layout title="Joyas de Oro | Tu Joyería">
   
-  
-  <!-- Banner Categoría -->
   <section class="relative h-64 overflow-hidden">
   
     <div class="absolute inset-0 flex flex-col justify-center items-center bg-cyan-800 text-center">
@@ -41,7 +25,7 @@ const products = await fetch ("http://localhost:8080/productos/summer")//ir camb
       <div class="gap-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" id="productsContainer">
         {products.map((product) => (
           <ProductCard 
-              id={product.id}
+              id={product._id}
               image={product.image}
               title={product.title}
               description={product.description}
@@ -50,105 +34,7 @@ const products = await fetch ("http://localhost:8080/productos/summer")//ir camb
         ))}
       </div>
 
-      <!-- Mensaje sin resultados -->
-      
   </section>
   
-  <!-- Productos Relacionados -->
-
 </Layout>
 
-<style>
-  @keyframes fadeInOut {
-    0% { opacity: 0; transform: translateY(20px); }
-    10% { opacity: 1; transform: translateY(0); }
-    90% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(20px); }
-  }
-  
-  .animate-fade-in-out {
-    animation: fadeInOut 3s ease-in-out forwards;
-  }
-</style>
-
-<script>
-  // Script para filtrado y ordenación de productos
-  document.addEventListener('DOMContentLoaded', () => {
-    const productosContainer = document.getElementById('productsContainer');
-    const productosItems = Array.from(productosContainer.children);
-    const sinResultados = document.getElementById('sinResultados');
-    const filtroNombre = document.getElementById('filtroNombre');
-    const filtroPrecio = document.getElementById('filtroPrecio');
-    const resetFiltros = document.getElementById('resetFiltros');
-    
-    function filtrarYOrdenarProductos() {
-      const terminoBusqueda = filtroNombre.value.toLowerCase();
-      const opcionOrden = filtroPrecio.value;
-      let productosVisibles = 0;
-      
-      productosItems.forEach(item => {
-        const nombre = item.querySelector('h3').textContent.toLowerCase();
-        const visible = nombre.includes(terminoBusqueda);
-        
-        if (visible) {
-          item.style.display = '';
-          productosVisibles++;
-        } else {
-          item.style.display = 'none';
-        }
-      });
-      
-      sinResultados.classList.toggle('hidden', productosVisibles > 0);
-      
-      if (opcionOrden !== 'relevancia') {
-        const productosArray = productosItems.filter(item => 
-          item.style.display !== 'none'
-        );
-        
-        productosArray.sort((a, b) => {
-          const nombreA = a.querySelector('h3').textContent;
-          const nombreB = b.querySelector('h3').textContent;
-          const precioA = parseFloat(a.querySelector('p:last-child').textContent);
-          const precioB = parseFloat(b.querySelector('p:last-child').textContent);
-          
-          switch(opcionOrden) {
-            case 'precioAsc': return precioA - precioB;
-            case 'precioDesc': return precioB - precioA;
-            case 'nombreAsc': return nombreA.localeCompare(nombreB);
-            case 'nombreDesc': return nombreB.localeCompare(nombreA);
-            default: return 0;
-          }
-        });
-        
-        productosArray.forEach(item => productosContainer.appendChild(item));
-      }
-    }
-    
-    // Event listeners
-    filtroNombre.addEventListener('input', filtrarYOrdenarProductos);
-    filtroPrecio.addEventListener('change', filtrarYOrdenarProductos);
-    
-    resetFiltros.addEventListener('click', () => {
-      filtroNombre.value = '';
-      filtroPrecio.value = 'relevancia';
-      productosItems.forEach(item => item.style.display = '');
-      sinResultados.classList.add('hidden');
-    });
-    
-    // Añadir al carrito
-    const botonesCarrito = document.querySelectorAll('.product-card');
-    botonesCarrito.forEach(boton => {
-      boton.addEventListener('click', (e) => {
-        const title = boton.querySelector('h3').textContent;
-        console.log(`Producto ${title} añadido al carrito`);
-        
-        const notificacion = document.createElement('div');
-        notificacion.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in-out';
-        notificacion.textContent = '¡Producto añadido al carrito!';
-        document.body.appendChild(notificacion);
-        
-        setTimeout(() => notificacion.remove(), 3000);
-      });
-    });
-  });
-</script>
