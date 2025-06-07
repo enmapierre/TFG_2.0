@@ -1,0 +1,188 @@
+---
+import Layout from '../layouts/Main.astro';
+
+// Información sobre Sara y su emprendimiento
+const aboutInfo = {
+  nombre: "Sara",
+  titulo: "Artesana Joyera",
+  experiencia: [
+    {
+      tipo: "Formación",
+      descripcion: "Curso de Joyería del SEPE"
+    },
+    {
+      tipo: "Educación",
+      descripcion: "Grado Medio de Joyería - Instituto Barajas"
+    },
+    {
+      tipo: "Reconocimiento",
+      descripcion: "Ganadora del Concurso Nacional de Joyería"
+    }
+  ]
+};
+---
+
+<Layout title="Sobre Nosotros | Tu Joyería">
+  
+  <!-- Banner About -->
+  <section class="relative h-64 overflow-hidden">
+    <div class="absolute inset-0 flex flex-col justify-center items-center bg-black/30 text-center">
+      <h1 class="mb-2 font-serif text-white text-4xl">Sobre Sara´s Jewels</h1>
+      <p class="max-w-lg text-white">Conoce la historia detrás de cada pieza única y artesanal</p>
+    </div>
+  </section>
+
+  <!-- Contenido Principal -->
+  <section class="px-4 py-12">
+    <div class="mx-auto max-w-4xl container">
+      
+      <!-- Historia del Emprendimiento -->
+      <div class="mb-12 text-center">
+        <h2 class="mb-6 font-serif text-gray-800 text-3xl">Un Pequeño Emprendimiento</h2>
+        <div class="mx-auto max-w-3xl text-gray-600 text-lg leading-relaxed">
+          <p class="mb-6">
+            Bienvenidos a nuestro pequeño emprendimiento de joyería artesanal. Aunque de momento no contamos con un gran stock, 
+            cada pieza que creamos está elaborada con mucho cariño y utilizando únicamente las mejores calidades disponibles.
+          </p>
+          <p class="mb-6">
+            Creemos firmemente que la calidad supera a la cantidad, por eso cada joya que sale de nuestro taller es una obra 
+            única, pensada y diseñada para perdurar en el tiempo y acompañarte en tus momentos más especiales.
+          </p>
+        </div>
+      </div>
+
+      <!-- Sobre Sara -->
+      <div class="items-center gap-12 grid grid-cols-1 lg:grid-cols-2 mb-12">
+        <div>
+          <h2 class="mb-6 font-serif text-gray-800 text-3xl">Conoceme</h2>
+          <div class="text-gray-600 text-lg leading-relaxed">
+            <p class="mb-4">
+              Sara es la mente creativa y las manos expertas detrás de cada una de nuestras creaciones. 
+              Su pasión por la joyería comenzó como un hobby y se ha convertido en su vocación.
+            </p>
+            <p class="mb-4">
+              Con una sólida formación y reconocimiento en el sector, Sara combina técnicas tradicionales 
+              con diseños contemporáneos para crear piezas verdaderamente especiales.
+            </p>
+            <p>
+              Cada joya cuenta una historia, y Sara se encarga de que esa historia sea única para cada cliente.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Placeholder para imagen de Sara -->
+        <div class="flex justify-center">
+          <div class="flex justify-center items-center bg-gray-200 rounded-lg w-80 h-80">
+            <span class="text-gray-500 text-lg">Foto de Sara</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formación y Logros -->
+      <div class="mb-12">
+        <h2 class="mb-8 font-serif text-gray-800 text-3xl text-center">Formación y Reconocimientos</h2>
+        <div class="gap-8 grid grid-cols-1 md:grid-cols-3">
+          {aboutInfo.experiencia.map((item, index) => (
+            <div class="bg-white shadow-lg p-6 border-t-4 border-black/30 rounded-lg text-center">
+              <h3 class="mb-3 font-semibold text-gray-800 text-xl">{item.tipo}</h3>
+              <p class="text-gray-600">{item.descripcion}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Nuestro Compromiso -->
+      <div class="bg-gray-50 p-8 rounded-lg text-center">
+        <h2 class="mb-6 font-serif text-gray-800 text-3xl">Nuestro Compromiso</h2>
+        <div class="gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+          <div class="flex flex-col items-center">
+            <div class="flex justify-center items-center bg-black/30 mb-4 rounded-full w-16 h-16">
+              <span class="text-white text-2xl">❤️</span>
+            </div>
+            <h3 class="mb-2 font-semibold text-lg">Hecho con Cariño</h3>
+            <p class="text-gray-600 text-sm">Cada pieza es creada con amor y dedicación</p>
+          </div>
+          
+          <div class="flex flex-col items-center">
+            <div class="flex justify-center items-center bg-black/30 mb-4 rounded-full w-16 h-16">
+              <span class="text-white text-2xl">⭐</span>
+            </div>
+            <h3 class="mb-2 font-semibold text-lg">Mejor Calidad</h3>
+            <p class="text-gray-600 text-sm">Utilizamos únicamente materiales de primera</p>
+          </div>
+          
+          <div class="flex flex-col items-center">
+            <div class="flex justify-center items-center bg-black/30 mb-4 rounded-full w-16 h-16">
+              <span class="text-white text-2xl">🎨</span>
+            </div>
+            <h3 class="mb-2 font-semibold text-lg">Diseño Único</h3>
+            <p class="text-gray-600 text-sm">Piezas exclusivas y personalizadas</p>
+          </div>
+          
+          <div class="flex flex-col items-center">
+            <div class="flex justify-center items-center bg-black/30 mb-4 rounded-full w-16 h-16">
+              <span class="text-white text-2xl">🏆</span>
+            </div>
+            <h3 class="mb-2 font-semibold text-lg">Reconocida</h3>
+            <p class="text-gray-600 text-sm">Premiada a nivel nacional</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensaje Personal -->
+      <div class="mt-12 text-center">
+        <div class="bg-black/10 mx-auto p-8 border-black/30 border-l-4 rounded-lg max-w-2xl">
+          <h3 class="mb-4 font-serif text-gray-800 text-2xl">Un Mensaje Personal</h3>
+          <p class="text-gray-700 text-lg italic leading-relaxed">
+            "Aunque nuestro catálogo pueda parecer pequeño, cada pieza representa horas de trabajo, 
+            técnica refinada y una pasión genuina por crear algo hermoso. Prefiero ofrecer pocas piezas 
+            excepcionales que muchas de calidad inferior. Gracias por confiar en nuestro trabajo artesanal."
+          </p>
+          <p class="mt-4 font-semibold text-gray-800">- Sara</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  
+</Layout>
+
+<style>
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(20px); }
+  }
+  
+  .animate-fade-in-out {
+    animation: fadeInOut 3s ease-in-out forwards;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Animación de aparición suave para las secciones
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Aplicar animación a las secciones principales
+    document.querySelectorAll('section > div').forEach(section => {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(20px)';
+      section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(section);
+    });
+  });
+</script>

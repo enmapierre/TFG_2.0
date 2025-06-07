@@ -1,0 +1,27 @@
+---
+//import '../styles/global.css';
+import Main from '../layouts/Main.astro';
+import Hero from '../components/Hero.astro';
+import Bestseller from '../components/Bestseller.astro';
+import CategorySection from '../components/CategorySection.astro';
+import Navbar from '../components/Navbar.astro';
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+		<Main title="MAMA JOYAS">
+			<Hero />
+			<Bestseller />
+			<CategorySection />
+		  </Main>
+		
+		
+	</body>
+</html>

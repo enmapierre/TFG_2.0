@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Importa las fuentes de Google */
+@import url('https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&family=League+Spartan:wght@100..900&family=Sedgwick+Ave&display=swap');
+
+/* Tus estilos personalizados aquí */

@@ -1,0 +1,71 @@
+---
+//import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&family=League+Spartan:wght@100..900&family=Sedgwick+Ave&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="FOR SKIN'S SAKE - Cuidado natural para la piel" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Navbar />
+    <main class="min-h-screen">
+      <slot />
+    </main>
+    <Footer />
+    
+    <script>
+      // Inicialización global del carrito
+      if (!window.cart) {
+        window.cart = {
+          items: JSON.parse(localStorage.getItem('cart')) || [],
+          getItems: function() { return this.items; },
+          clearCart: function() {
+            this.items = [];
+            localStorage.removeItem('cart');
+            document.dispatchEvent(new Event('cartUpdated'));
+          }
+        };
+      }
+    </script>
+    
+    <script type="module" src="/scripts/cart.js"></script>
+    
+    <script>
+      // Script para el funcionamiento de los carruseles
+      document.addEventListener('astro:page-load', () => {
+        const carousels = document.querySelectorAll('.carousel');
+        
+        carousels.forEach(carousel => {
+          const prevBtn = carousel.parentElement.querySelector('.prev-btn');
+          const nextBtn = carousel.parentElement.querySelector('.next-btn');
+          
+          if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+              carousel.scrollBy({ left: -carousel.offsetWidth, behavior: 'smooth' });
+            });
+            
+            nextBtn.addEventListener('click', () => {
+              carousel.scrollBy({ left: carousel.offsetWidth, behavior: 'smooth' });
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

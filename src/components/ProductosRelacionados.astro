@@ -1,0 +1,37 @@
+---
+// Componente para mostrar productos relacionados
+import ProductOCard from './ProductCard.astro';
+
+interface Producto {
+  id: number;
+  title: string;
+  price: string;
+  description: string;
+  image: string;
+}
+
+interface Props {
+  titulo?: string;
+  productos: Producto[];
+}
+
+const { titulo = "También te puede interesar", productos } = Astro.props;
+const productosAMostrar = productos.slice(0, 4);
+---
+
+<section class="bg-gray-50 py-12">
+  <div class="mx-auto px-4 container">
+    <h2 class="mb-8 font-serif text-2xl text-center">{titulo}</h2>
+    
+    <div class="gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      {productosAMostrar.map((producto) => (
+        <ProductOCard
+          image={producto.image}
+          title={producto.title}
+          description={producto.description}
+          price={producto.price}
+        />
+      ))}
+    </div>
+  </div>
+</section>
