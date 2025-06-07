@@ -1,7 +1,7 @@
 ---
 import ProductCard from './ProductCard.astro';
 
-const products = await fetch ("http://localhost:8080/productos")//ir cambiando
+const products = await fetch ("http://localhost:8080/productos")
 .then(res=>{return res.json()})
 ---
 
@@ -18,7 +18,7 @@ const products = await fetch ("http://localhost:8080/productos")//ir cambiando
           .map(product => (
           <div class="flex-shrink-0 w-[250px] md:w-[280px]">
             <ProductCard 
-              id={product.id}
+              id={product._id}
               image={product.image}
               title={product.title}
               description={product.description}
@@ -31,8 +31,6 @@ const products = await fetch ("http://localhost:8080/productos")//ir cambiando
   </div>
 </section>
 
-<!-- Script del carrito cargado una sola vez -->
-<script src="/src/scripts/cart.js"></script>
 
 
 <!--8 fijos
