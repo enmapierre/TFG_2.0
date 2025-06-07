@@ -457,62 +457,33 @@ function setupFormHandlers() {
     console.log('Payload preparado:', payload);
     console.log('Payload como JSON:', JSON.stringify(payload));
 
-    try {
-      console.log('Enviando petición a /api/checkout...');
-      
-      const res = await fetch("/api/checkout", {
-        method: "POST",
+    cart.map(async(producto)=>{
+
+        const UpdatedProducto = { 
+          "stock":parseInt(producto.quantity)
+
+        }
+        const res = await fetch("http://localhost:8080/productos/" + producto.id, {
+        method: "PUT",
         headers: { 
-          "Content-Type": "application/json",
+          "Content-Type": "application/json",//ESTO Y ERROR CONSOLA
           "Accept": "application/json"
         },
-        body: JSON.stringify(payload)
-      });
-
-      console.log('Respuesta recibida - Status:', res.status);
-      console.log('Respuesta recibida - Headers:', [...res.headers.entries()]);
-
-      let result;
-      try {
-        const responseText = await res.text();
-        console.log('Respuesta raw:', responseText);
         
-        if (responseText) {
-          result = JSON.parse(responseText);
-          console.log('Respuesta parseada:', result);
-        } else {
-          throw new Error('Respuesta vacía del servidor');
-        }
-      } catch (parseError) {
-        console.error('Error al parsear respuesta:', parseError);
-        showMessage("error", "❌ Error al procesar respuesta del servidor.");
-        resetSubmit();
-        return;
-      }
+        body: JSON.stringify(UpdatedProducto)
+      })
+      const responseText = await res.text();
+      const result = JSON.parse(responseText);
+       if(!res.ok || !result.success){
+         showMessage("error", "❌ " + (result.message || "Error en el pedido."));
 
-      if (res.ok && result.success) {
+       }else{
         showMessage("success", "✅ " + result.message);
-        localStorage.removeItem("cart");
-        
-        // Mostrar información adicional si hay número de pedido
-        if (result.order_number) {
-          setTimeout(() => {
-            showMessage("success", `✅ Pedido confirmado. Número de pedido: ${result.order_number}. Revisa tu email.`);
-          }, 1000);
-        }
-        
-        setTimeout(() => location.href = "/gracias", 4000);
-      } else {
-        showMessage("error", "❌ " + (result.message || "Error en el pedido."));
-      }
-
-    } catch (err) {
-      console.error('Error en la petición:', err);
-      showMessage("error", "❌ Error de red. Intenta nuevamente.");
-    } finally {
-      resetSubmit();
-      renderCartSummary();
-    }
+       }
+      
+      })
+     
+      localStorage.removeItem("carrito");
   });
 
   function showMessage(type, text) {

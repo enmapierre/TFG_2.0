@@ -130,62 +130,20 @@ function setupFormHandlers() {
     };
 
     console.log('Payload preparado:', payload);
-
-    try {
-      console.log('Enviando petición a /api/checkout...');
-      
-      const res = await fetch("/api/checkout", {
-        method: "POST",
+    
+      cart.map(async(producto)=>{
+        const res = await fetch("http://localhost:8080/productos/" + producto._id, {
+        method: "PUT",
         headers: { 
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(producto)
       });
 
-      console.log('Respuesta recibida - Status:', res.status);
-
-      let result;
-      try {
-        const responseText = await res.text();
-        console.log('Respuesta raw:', responseText);
-        
-        if (responseText) {
-          result = JSON.parse(responseText);
-          console.log('Respuesta parseada:', result);
-        } else {
-          throw new Error('Respuesta vacía del servidor');
-        }
-      } catch (parseError) {
-        console.error('Error al parsear respuesta:', parseError);
-        showMessage("error", "❌ Error al procesar respuesta del servidor.");
-        resetSubmit();
-        return;
-      }
-
-      if (res.ok && result.success) {
-        showMessage("success", "✅ " + result.message);
-        localStorage.removeItem("carrito"); // Cambiar a "carrito"
-        
-        // Mostrar información adicional si hay número de pedido
-        if (result.order_number) {
-          setTimeout(() => {
-            showMessage("success", `✅ Pedido confirmado. Número de pedido: ${result.order_number}. Revisa tu email.`);
-          }, 1000);
-        }
-        
-        setTimeout(() => location.href = "/gracias", 4000);
-      } else {
-        showMessage("error", "❌ " + (result.message || "Error en el pedido."));
-      }
-
-    } catch (err) {
-      console.error('Error en la petición:', err);
-      showMessage("error", "❌ Error de red. Intenta nuevamente.");
-    } finally {
-      resetSubmit();
-      renderCartSummary();
-    }
+      })
+      localStorage.removeItem("carrito");
+    
   });
 
   function showMessage(type, text) {
